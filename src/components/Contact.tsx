@@ -55,8 +55,8 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-12 md:py-20 bg-background px-3 sm:px-4">
-      <div className="container mx-auto max-w-full">
+    <section id="contact" className="py-12 md:py-20 bg-background px-4 sm:px-6 overflow-hidden">
+      <div className="container mx-auto max-w-full min-w-0">
         <AnimateIn animation="fade-up" duration={900} className="text-center mb-16">
           <span className="inline-block bg-primary/10 text-primary font-bold px-4 py-2 rounded-full text-sm mb-4">
             GET IN TOUCH
@@ -73,15 +73,15 @@ const Contact = () => {
           {/* Contact Info */}
           <AnimateIn animation="slide-left" duration={900} className="space-y-8">
           <div className="space-y-8">
-            <div className="card-teal rounded-2xl p-8 text-white transition-all duration-300 hover:shadow-xl">
+            <div className="card-teal rounded-2xl p-6 sm:p-8 text-white transition-all duration-300 hover:shadow-xl min-w-0 overflow-hidden">
               <h3 className="text-2xl font-bold mb-6 text-white">Contact Information</h3>
               
               <div className="space-y-6">
-                <div className="flex items-start gap-4">
+                <div className="flex items-start gap-4 min-w-0">
                   <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0 text-white">
                     <MapPin className="h-6 w-6" />
                   </div>
-                  <div>
+                  <div className="min-w-0 break-words">
                     <p className="font-bold text-lg text-white">Address</p>
                     <p className="text-white/95">
                       {business.addressLines[0]}<br />
@@ -99,21 +99,21 @@ const Contact = () => {
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4">
+                <div className="flex items-start gap-4 min-w-0">
                   <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0 text-white">
                     <Phone className="h-6 w-6" />
                   </div>
-                  <div>
+                  <div className="min-w-0 break-words">
                     <p className="font-bold text-lg text-white">Phone</p>
                     <p className="text-white/95">{business.phoneDisplay}</p>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4">
+                <div className="flex items-start gap-4 min-w-0">
                   <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0 text-white">
                     <Mail className="h-6 w-6" />
                   </div>
-                  <div>
+                  <div className="min-w-0 break-words">
                     <p className="font-bold text-lg text-white">Email</p>
                     <p className="text-white/95">{business.primaryEmail}</p>
                     {business.secondaryEmail && <p className="text-white/95">{business.secondaryEmail}</p>}
@@ -127,12 +127,12 @@ const Contact = () => {
               href={whatsappLink}
               target="_blank" 
               rel="noopener noreferrer"
-              className="flex items-center gap-4 whatsapp-cta text-white rounded-2xl p-6 transition-all shadow-lg"
+              className="flex items-center gap-4 whatsapp-cta text-white rounded-2xl p-6 transition-all shadow-lg min-w-0"
             >
-              <div className="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center">
+              <div className="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
                 <MessageCircle className="h-8 w-8" />
               </div>
-              <div>
+              <div className="min-w-0 break-words">
                 <p className="font-bold text-lg">Chat on WhatsApp</p>
                 <p className="opacity-95">Quick response guaranteed</p>
               </div>
@@ -143,12 +143,12 @@ const Contact = () => {
               href="https://www.linkedin.com/company/asliprep" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="linkedin-cta flex items-center gap-4 rounded-2xl p-6 shadow-lg"
+              className="linkedin-cta flex items-center gap-4 rounded-2xl p-6 shadow-lg min-w-0"
             >
               <div className="linkedin-icon-wrap w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0 text-white">
                 <Linkedin className="h-8 w-8" strokeWidth={2} />
               </div>
-              <div>
+              <div className="min-w-0 break-words">
                 <p className="font-bold text-lg text-white">Connect on LinkedIn</p>
                 <p className="text-white/95 text-sm">Follow us for updates</p>
               </div>

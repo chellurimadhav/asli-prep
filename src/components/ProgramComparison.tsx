@@ -31,13 +31,13 @@ export default function ProgramComparison() {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <div className="mt-16 text-center cursor-pointer">
-          <div className="inline-flex items-center gap-4 bg-white rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] border border-border">
-            <Brain className="h-12 w-12 text-primary" />
-            <div className="text-left">
+          <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6 bg-white rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] border border-border max-w-2xl mx-auto md:inline-flex">
+            <Brain className="h-12 w-12 text-primary shrink-0" />
+            <div className="text-center md:text-left">
               <p className="font-bold text-secondary text-lg">Not sure which program is right?</p>
               <p className="text-muted-foreground">Compare Alpha, Beta & Gamma side by side</p>
             </div>
-            <Button className="bg-primary text-white font-bold px-6 py-3 rounded-xl hover:bg-primary/90 transition-all shrink-0">
+            <Button className="w-full sm:w-auto bg-primary text-white font-bold px-6 py-3 rounded-xl hover:bg-primary/90 transition-all shrink-0">
               Compare Programs
             </Button>
           </div>

@@ -48,21 +48,21 @@ export default function About() {
       <Navbar />
 
       {/* Hero – same colours as main page: light bg, dark blue + green text for readability */}
-      <section className="pt-24 pb-16 bg-gradient-to-b from-slate-50 via-white to-teal-50/30">
-        <div className="container mx-auto">
+      <section className="pt-24 pb-16 bg-gradient-to-b from-slate-50 via-white to-teal-50/30 px-4 sm:px-6">
+        <div className="container mx-auto max-w-full overflow-hidden">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="max-w-3xl">
+            <div className="max-w-3xl min-w-0">
               <span className="inline-block bg-primary/10 text-primary font-bold px-4 py-2 rounded-full text-sm mb-6">
                 ABOUT US
               </span>
-              <h1 className="text-4xl md:text-6xl font-extrabold text-secondary mb-6">
+              <h1 className="text-4xl md:text-6xl font-extrabold text-secondary mb-6 break-words">
                 Bridging School Learning & <span className="text-gradient-teal">Competitive Success</span>
               </h1>
-              <p className="text-xl text-foreground/90 mb-8 leading-relaxed">
+              <p className="text-xl text-foreground/90 mb-8 leading-relaxed break-words">
                 {description}
               </p>
-              <Button asChild className="bg-primary hover:bg-primary/90 text-white font-bold px-8 py-4 rounded-xl text-lg">
-                <a href="/#contact">Schedule Institutional Partnership Meeting</a>
+              <Button asChild className="bg-primary hover:bg-primary/90 text-white font-bold px-6 sm:px-8 py-4 rounded-xl text-lg w-full sm:w-auto">
+                <a href="/#contact" className="block text-center">Schedule Institutional Partnership Meeting</a>
               </Button>
             </div>
             {about.imageUrl && (

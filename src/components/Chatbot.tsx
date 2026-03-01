@@ -89,13 +89,17 @@ export default function Chatbot() {
   const [input, setInput] = useState('');
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  // Show "Chat with us" label after a short delay so visitors notice the chatbot
+  // Show "Chat with us" label after a short delay, then hide it after 2 seconds from page load
   useEffect(() => {
-    const t = setTimeout(() => setLabelVisible(true), 800);
-    return () => clearTimeout(t);
+    const show = setTimeout(() => setLabelVisible(true), 800);
+    const hide = setTimeout(() => setLabelVisible(false), 2000);
+    return () => {
+      clearTimeout(show);
+      clearTimeout(hide);
+    };
   }, []);
 
-  // One-time hint bubble for new visitors
+  // One-time hint bubble for new visitors; auto-dismiss after 2 seconds
   useEffect(() => {
     if (open || typeof sessionStorage === 'undefined') return;
     const seen = sessionStorage.getItem(HINT_KEY);
@@ -103,6 +107,16 @@ export default function Chatbot() {
     const show = setTimeout(() => setHintVisible(true), 1500);
     return () => clearTimeout(show);
   }, [open]);
+
+  // Auto-close hint popup 2 seconds after it appears
+  useEffect(() => {
+    if (!hintVisible) return;
+    const hide = setTimeout(() => {
+      setHintVisible(false);
+      try { sessionStorage.setItem(HINT_KEY, '1'); } catch {}
+    }, 2000);
+    return () => clearTimeout(hide);
+  }, [hintVisible]);
 
   const dismissHint = () => {
     setHintVisible(false);
@@ -181,14 +195,13 @@ export default function Chatbot() {
         </div>
       )}
 
-      {/* One-time hint bubble so visitors know they can chat */}
+      {/* One-time hint bubble – kept inside viewport on mobile */}
       {hintVisible && !open && (
         <div
-          className="fixed bottom-20 z-50 max-w-[220px] animate-in fade-in slide-in-from-bottom-2 duration-300"
-          style={{ right: 'max(1rem, env(safe-area-inset-right))' }}
+          className="fixed bottom-20 z-50 left-4 right-4 sm:left-auto sm:right-[max(1rem,env(safe-area-inset-right))] sm:w-auto max-w-[220px] ml-auto animate-in fade-in slide-in-from-bottom-2 duration-300 flex flex-col items-end"
           role="tooltip"
         >
-          <div className="bg-primary text-white text-sm font-medium rounded-2xl rounded-br-md px-4 py-3 shadow-lg border border-primary/20">
+          <div className="bg-primary text-white text-sm font-medium rounded-2xl rounded-br-md px-4 py-3 shadow-lg border border-primary/20 break-words w-full max-w-[220px]">
             <p>Have questions? Chat with our assistant here 👋</p>
             <button
               type="button"
@@ -202,16 +215,16 @@ export default function Chatbot() {
         </div>
       )}
 
-      {/* Toggle button with visible label – inset on mobile so content isn’t covered */}
+      {/* Toggle button with visible label – inside viewport on mobile */}
       <div
-        className="fixed z-50 flex items-center gap-2"
+        className="fixed z-50 flex items-center gap-2 max-w-[calc(100vw-2rem)]"
         style={{
           bottom: 'max(1rem, env(safe-area-inset-bottom))',
           right: 'max(1rem, env(safe-area-inset-right))',
         }}
       >
         <span
-          className={`bg-primary text-white text-sm font-semibold px-4 py-2 rounded-full shadow-lg whitespace-nowrap transition-all duration-300 ${
+          className={`bg-primary text-white text-sm font-semibold px-3 py-2 rounded-full shadow-lg transition-all duration-300 min-w-0 truncate max-w-[140px] sm:max-w-none sm:whitespace-nowrap ${
             labelVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4 pointer-events-none'
           }`}
         >
@@ -220,7 +233,7 @@ export default function Chatbot() {
         <button
           type="button"
           onClick={() => setOpen((o) => !o)}
-          className="w-14 h-14 rounded-full bg-primary text-white shadow-lg flex items-center justify-center hover:bg-primary/90 transition-all duration-300 hover:scale-110 chat-button-pulse"
+          className="w-14 h-14 shrink-0 rounded-full bg-primary text-white shadow-lg flex items-center justify-center hover:bg-primary/90 transition-all duration-300 hover:scale-110 chat-button-pulse"
           aria-label="Open chat - Ask about programs, contact, partnerships"
         >
           <MessageCircle className="h-7 w-7" />
