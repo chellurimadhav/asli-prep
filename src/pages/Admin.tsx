@@ -112,6 +112,20 @@ type PromoVideo = {
   active: boolean;
 };
 
+type ResourcesItem = { title: string; desc: string; action: string };
+type ResourcesPageContent = {
+  sectionBadge: string;
+  sectionTitle: string;
+  sectionTitleHighlight: string;
+  sectionDescription: string;
+  downloadablesBadge: string;
+  downloadablesTitle: string;
+  downloadablesTitleHighlight: string;
+  items: ResourcesItem[];
+  newsletterTitle: string;
+  newsletterDescription: string;
+};
+
 type AdminSection =
   | "hero"
   | "about"
@@ -120,6 +134,7 @@ type AdminSection =
   | "downloadables"
   | "business"
   | "promoVideos"
+  | "resources"
   | "newsletter";
 
 // ── Sidebar items ──
@@ -131,6 +146,7 @@ const sidebarItems: { id: AdminSection; label: string; icon: any }[] = [
   { id: "downloadables", label: "Brochure / Files", icon: FileDown },
   { id: "business", label: "Contact & Footer", icon: Mail },
   { id: "promoVideos", label: "Gallery – Promo Videos", icon: Image },
+  { id: "resources", label: "Resources Page", icon: FileText },
   { id: "newsletter", label: "Newsletter", icon: Mail },
 ];
 
@@ -355,6 +371,26 @@ export default function Admin() {
       "Your Right School Partner for JEE | NEET | OLYMPIAD FOUNDATIONS!",
   });
 
+  const defaultResourcesContent: ResourcesPageContent = {
+    sectionBadge: "RESOURCES",
+    sectionTitle: "Free",
+    sectionTitleHighlight: "Resources",
+    sectionDescription:
+      "Free sample study materials, blog articles on exam preparation, parenting tips for competitive exam prep, latest exam updates and news, video library (sample lectures), downloadable guides, success stories and case studies.",
+    downloadablesBadge: "DOWNLOADABLES",
+    downloadablesTitle: "Request",
+    downloadablesTitleHighlight: "Resources",
+    items: [
+      { title: "Free Sample Study Materials", desc: "Comprehensive, exam-aligned content", action: "Download" },
+      { title: "Downloadable Guides", desc: "Blog articles on exam preparation, parenting tips for competitive exam prep", action: "View" },
+      { title: "Video Library", desc: "Sample lectures. Latest exam updates and news", action: "Watch" },
+      { title: "Success Stories & Case Studies", desc: "Testimonials from students, teachers, and administrators", action: "Read" },
+    ],
+    newsletterTitle: "Stay Updated",
+    newsletterDescription: "Newsletter signup for updates. Latest exam updates and news, parenting tips for competitive exam prep.",
+  };
+  const [resourcesPage, setResourcesPage] = useState<ResourcesPageContent>(defaultResourcesContent);
+
   // ── Fetch all content on login ──
   useEffect(() => {
     if (!token) return;
@@ -399,6 +435,10 @@ export default function Admin() {
           (d) => {
             if (d?.videos) setPromoVideos(d.videos as PromoVideo[]);
           },
+        ],
+        [
+          "resources",
+          (d) => setResourcesPage((p) => ({ ...defaultResourcesContent, ...p, ...d })),
         ],
       ];
       for (const [key, setter] of keys) {
@@ -1685,6 +1725,176 @@ export default function Admin() {
                   ))}
               </div>
             </SectionCard>
+          )}
+
+          {/* ──────────────────────────────────────
+               RESOURCES PAGE
+          ────────────────────────────────────── */}
+          {activeSection === "resources" && (
+            <div className="space-y-6">
+              <SectionCard
+                title="Resources Page – Hero"
+                description="Badge, title and intro on the Resources page."
+                onSave={() => saveContent("resources", resourcesPage)}
+              >
+                <Field label="Section Badge">
+                  <Input
+                    value={resourcesPage.sectionBadge}
+                    onChange={(e) =>
+                      setResourcesPage((p) => ({ ...p, sectionBadge: e.target.value }))
+                    }
+                    placeholder="RESOURCES"
+                  />
+                </Field>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <Field label="Title (first part)">
+                    <Input
+                      value={resourcesPage.sectionTitle}
+                      onChange={(e) =>
+                        setResourcesPage((p) => ({ ...p, sectionTitle: e.target.value }))
+                      }
+                      placeholder="Free"
+                    />
+                  </Field>
+                  <Field label="Title (highlight part)">
+                    <Input
+                      value={resourcesPage.sectionTitleHighlight}
+                      onChange={(e) =>
+                        setResourcesPage((p) => ({ ...p, sectionTitleHighlight: e.target.value }))
+                      }
+                      placeholder="Resources"
+                    />
+                  </Field>
+                </div>
+                <Field label="Section Description">
+                  <Textarea
+                    rows={3}
+                    value={resourcesPage.sectionDescription}
+                    onChange={(e) =>
+                      setResourcesPage((p) => ({ ...p, sectionDescription: e.target.value }))
+                    }
+                    placeholder="Intro paragraph..."
+                  />
+                </Field>
+              </SectionCard>
+
+              <SectionCard
+                title="Request Resources Block"
+                description="Badge and title for the downloadables block."
+                onSave={() => saveContent("resources", resourcesPage)}
+              >
+                <Field label="Block Badge">
+                  <Input
+                    value={resourcesPage.downloadablesBadge}
+                    onChange={(e) =>
+                      setResourcesPage((p) => ({ ...p, downloadablesBadge: e.target.value }))
+                    }
+                    placeholder="DOWNLOADABLES"
+                  />
+                </Field>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <Field label="Title (first part)">
+                    <Input
+                      value={resourcesPage.downloadablesTitle}
+                      onChange={(e) =>
+                        setResourcesPage((p) => ({ ...p, downloadablesTitle: e.target.value }))
+                      }
+                      placeholder="Request"
+                    />
+                  </Field>
+                  <Field label="Title (highlight part)">
+                    <Input
+                      value={resourcesPage.downloadablesTitleHighlight}
+                      onChange={(e) =>
+                        setResourcesPage((p) => ({ ...p, downloadablesTitleHighlight: e.target.value }))
+                      }
+                      placeholder="Resources"
+                    />
+                  </Field>
+                </div>
+              </SectionCard>
+
+              <SectionCard
+                title="Resource Cards (4 items)"
+                description="Title, description and action label for each card. Order matches the page."
+                onSave={() => saveContent("resources", resourcesPage)}
+              >
+                {(resourcesPage.items || []).map((item, index) => (
+                  <div key={index} className="p-4 rounded-xl border border-slate-200 bg-slate-50/50 space-y-3">
+                    <h4 className="text-sm font-semibold text-slate-700">Card {index + 1}</h4>
+                    <Field label="Title">
+                      <Input
+                        value={item.title}
+                        onChange={(e) =>
+                          setResourcesPage((p) => ({
+                            ...p,
+                            items: (p.items || []).map((it, i) =>
+                              i === index ? { ...it, title: e.target.value } : it
+                            ),
+                          }))
+                        }
+                        placeholder="e.g. Free Sample Study Materials"
+                      />
+                    </Field>
+                    <Field label="Description">
+                      <Textarea
+                        rows={2}
+                        value={item.desc}
+                        onChange={(e) =>
+                          setResourcesPage((p) => ({
+                            ...p,
+                            items: (p.items || []).map((it, i) =>
+                              i === index ? { ...it, desc: e.target.value } : it
+                            ),
+                          }))
+                        }
+                        placeholder="Short description"
+                      />
+                    </Field>
+                    <Field label="Action Label">
+                      <Input
+                        value={item.action}
+                        onChange={(e) =>
+                          setResourcesPage((p) => ({
+                            ...p,
+                            items: (p.items || []).map((it, i) =>
+                              i === index ? { ...it, action: e.target.value } : it
+                            ),
+                          }))
+                        }
+                        placeholder="e.g. Download / View / Watch"
+                      />
+                    </Field>
+                  </div>
+                ))}
+              </SectionCard>
+
+              <SectionCard
+                title="Newsletter Block (Resources page)"
+                description="Title and description for the newsletter section on Resources page."
+                onSave={() => saveContent("resources", resourcesPage)}
+              >
+                <Field label="Newsletter Title">
+                  <Input
+                    value={resourcesPage.newsletterTitle}
+                    onChange={(e) =>
+                      setResourcesPage((p) => ({ ...p, newsletterTitle: e.target.value }))
+                    }
+                    placeholder="Stay Updated"
+                  />
+                </Field>
+                <Field label="Newsletter Description">
+                  <Textarea
+                    rows={2}
+                    value={resourcesPage.newsletterDescription}
+                    onChange={(e) =>
+                      setResourcesPage((p) => ({ ...p, newsletterDescription: e.target.value }))
+                    }
+                    placeholder="Newsletter signup for updates..."
+                  />
+                </Field>
+              </SectionCard>
+            </div>
           )}
 
           {/* ──────────────────────────────────────
