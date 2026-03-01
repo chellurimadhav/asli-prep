@@ -107,14 +107,6 @@ const Navbar = () => {
 
           {/* CTA Buttons */}
           <div className="hidden lg:flex items-center gap-3 shrink-0">
-            <a
-              href="https://www.aslilearn.ai"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-primary hover:text-primary/80 font-semibold text-sm transition-colors"
-            >
-              Meet VIDYA
-            </a>
             <a href="/#contact">
               <Button size="sm" className="btn-lift bg-primary hover:bg-primary/90 text-white font-semibold h-9 px-5 rounded-lg">
                 Partner With Us
@@ -159,15 +151,6 @@ const Navbar = () => {
                 {link.label}
               </a>
             ))}
-            <a
-              href="https://www.aslilearn.ai"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block text-primary font-semibold px-2 py-2.5 rounded-lg hover:bg-primary/5"
-              onClick={() => setIsOpen(false)}
-            >
-              Meet VIDYA →
-            </a>
             <a href="/#contact" onClick={(e) => handleMobileNavClick(e, '/#contact')} className="block pt-2">
               <Button className="btn-lift w-full bg-primary hover:bg-primary/90 text-white font-semibold h-10 rounded-lg">
                 Partner With Us

@@ -3,6 +3,7 @@ import Footer from '@/components/Footer';
 import { MessageCircle, Brain, Zap, BookOpen } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useContent } from '@/hooks/useContent';
+import { useBusinessInfo } from '@/hooks/useBusinessInfo';
 
 const features = [
   { icon: Brain, title: '24/7 Learning Assistant', desc: 'Get instant answers to doubts anytime, anywhere' },
@@ -28,8 +29,13 @@ const defaultVidya: VidyaContent = {
   yearWise: [],
 };
 
+const DEMO_WHATSAPP_MESSAGE = 'Hi, I Would Like To Have An Asli Prep Demo At My Campus.';
+
 export default function MeetVidya() {
   const { data: vidya } = useContent<VidyaContent>('vidya', defaultVidya);
+  const { data: business } = useBusinessInfo();
+  const whatsappNumber = business?.whatsappNumber || '919346832477';
+  const demoWhatsAppUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(DEMO_WHATSAPP_MESSAGE)}`;
 
   const title = vidya.sectionTitle || defaultVidya.sectionTitle;
   const description = vidya.description || defaultVidya.description;
@@ -60,18 +66,13 @@ export default function MeetVidya() {
                   title
                 )}
               </h1>
-              <p className="text-xl text-foreground/90 mb-4 leading-relaxed">
+              <p className="text-xl text-foreground/90 mb-6 leading-relaxed">
                 {description}
               </p>
-              {vidya.highlightText && (
-                <p className="text-lg font-bold text-primary mb-6">
-                  {vidya.highlightText}
-                </p>
-              )}
               <div className="flex flex-wrap gap-4">
-                <Button asChild className="bg-primary hover:bg-primary/90 text-white font-bold px-8 py-4 rounded-xl text-lg">
-                  <a href="https://www.aslilearn.ai" target="_blank" rel="noopener noreferrer">
-                    Try VIDYA Now →
+                <Button asChild className="bg-primary hover:bg-primary/90 text-white font-bold px-6 py-4 rounded-xl text-base sm:text-lg">
+                  <a href={demoWhatsAppUrl} target="_blank" rel="noopener noreferrer" className="text-center whitespace-normal leading-snug">
+                    Want To Know More? Click to request a demo
                   </a>
                 </Button>
               </div>
@@ -142,19 +143,19 @@ export default function MeetVidya() {
         </div>
       </section>
 
-      {/* CTA */}
+      {/* CTA – request demo via WhatsApp */}
       <section className="py-20 section-navy">
         <div className="container mx-auto text-center">
           <div className="max-w-2xl mx-auto">
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
-              Demo or Trial Access
+              Want to see VIDYA at your campus?
             </h2>
             <p className="text-white/70 mb-8">
-              Visit www.aslilearn.ai to try VIDYA for free.
+              Request a demo and we’ll get in touch to schedule a session.
             </p>
-            <Button asChild className="bg-accent text-accent-foreground font-bold px-8 py-4 text-lg">
-              <a href="https://www.aslilearn.ai" target="_blank" rel="noopener noreferrer">
-                Try VIDYA Now →
+            <Button asChild className="bg-accent text-accent-foreground font-bold px-6 py-4 text-base sm:text-lg">
+              <a href={demoWhatsAppUrl} target="_blank" rel="noopener noreferrer" className="text-center whitespace-normal leading-snug">
+                Want To Know More? Click to request a demo
               </a>
             </Button>
           </div>
