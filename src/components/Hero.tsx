@@ -38,12 +38,12 @@ const Hero = () => {
       </div>
 
       <div className="container mx-auto relative z-10 min-w-0 px-4 sm:px-6 lg:px-8">
-        {/* Mobile: headline → photo (arrow area) → badges + CTAs. Laptop: original layout – image left, content right in one column */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 xl:gap-16 min-h-0 lg:min-h-[80vh] items-start lg:items-center">
-          {/* 1. Headline – staggered entrance; tablet stays stacked like phone */}
-          <AnimateIn animation="fade-up" delay={0} duration={700} className="order-1 lg:col-start-2 lg:row-start-1 text-center lg:text-left">
+        {/* Mobile: headline → photo → badges + CTAs. Desktop: image left, content right; aligned column edges */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 xl:gap-10 min-h-0 lg:min-h-[80vh] items-start lg:content-start">
+          {/* 1. Headline – same horizontal padding as image column for alignment */}
+          <AnimateIn animation="fade-up" delay={0} duration={700} className="order-1 lg:col-start-2 lg:row-start-1 text-center lg:text-left w-full min-w-0 px-0">
             <div className="inline-flex items-center gap-2 bg-primary/10 px-3 py-1.5 md:px-4 md:py-2 rounded-full mb-3 md:mb-6 transition-all duration-300 hover:bg-primary/15">
-              <Star className="h-3.5 w-3.5 md:h-4 md:w-4 text-primary" />
+              <Star className="h-3.5 w-3.5 md:h-4 md:w-4 text-primary shrink-0" />
               <span className="text-secondary font-medium text-sm md:text-base">Your Right School Partner for JEE | NEET | OLYMPIAD FOUNDATIONS!</span>
             </div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-secondary leading-tight mb-2 md:mb-4">
@@ -58,9 +58,9 @@ const Hero = () => {
             </p>
           </AnimateIn>
 
-          {/* 2. Photo – scale-in + hover transition */}
-          <AnimateIn animation="fade-in" delay={150} duration={800} className="order-2 lg:col-start-1 lg:row-start-1 flex justify-center lg:justify-start lg:items-start">
-            <div className="relative w-full max-w-lg mx-auto lg:max-w-xl xl:max-w-3xl 2xl:max-w-4xl hero-image-wrap">
+          {/* 2. Photo – full width of grid cell so right column aligns with image */}
+          <AnimateIn animation="fade-in" delay={150} duration={800} className="order-2 lg:col-start-1 lg:row-start-1 w-full min-w-0 flex justify-center lg:justify-start lg:items-start">
+            <div className="relative w-full max-w-lg mx-auto lg:max-w-none lg:mx-0 lg:w-full xl:max-w-xl 2xl:max-w-2xl hero-image-wrap">
               <div className="absolute -inset-4 bg-gradient-to-br from-primary/20 to-accent/20 rounded-3xl blur-2xl opacity-60 hero-glow" />
               <img
                 src={heroContent.heroImageUrl || "/images/mainImage.png"}
@@ -70,9 +70,9 @@ const Hero = () => {
             </div>
           </AnimateIn>
 
-          {/* Schedule Meeting CTA – centered under image; on desktop sits in col 1 row 2; on mobile clear gap below image */}
-          <AnimateIn animation="fade-up" delay={250} duration={700} className="order-3 lg:col-start-1 lg:row-start-2 flex justify-center lg:justify-center mt-4 lg:-mt-16">
-            <a href="/#contact" className="w-full max-w-full sm:max-w-lg lg:max-w-xl xl:max-w-2xl group/btn flex justify-center min-w-0">
+          {/* Schedule Meeting CTA – under image; left column (old style) */}
+          <AnimateIn animation="fade-up" delay={250} duration={700} className="order-3 lg:col-start-1 lg:row-start-2 flex justify-center lg:justify-start mt-0 lg:-mt-2 w-full min-w-0">
+            <a href="/#contact" className="w-full max-w-full sm:max-w-lg lg:max-w-xl lg:w-auto group/btn flex justify-center lg:justify-start min-w-0 px-0">
               <Button size="lg" className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-white font-bold px-4 sm:px-6 py-5 md:px-8 md:py-6 text-sm sm:text-base md:text-lg rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 [&_svg]:transition-transform [&_svg]:duration-300 group-hover/btn:[&_svg]:translate-x-1 whitespace-normal text-center break-words">
                 {heroContent.ctaText || "Schedule Institutional Partnership Meeting"}
                 <ArrowRight className="ml-2 h-5 w-5 flex-shrink-0" />
@@ -80,8 +80,8 @@ const Hero = () => {
             </a>
           </AnimateIn>
 
-          {/* Block 3: Badges + Explore Programs – right column row 2 on desktop; on mobile stacked below Schedule with no overlap */}
-          <AnimateIn animation="fade-up" delay={300} duration={700} className="order-4 lg:col-start-2 lg:row-start-2 flex flex-col items-center lg:items-start text-center lg:text-left mt-6 lg:-mt-24">
+          {/* Badges + Explore Programs – right column */}
+          <AnimateIn animation="fade-up" delay={300} duration={700} className="order-4 lg:col-start-2 lg:row-start-2 flex flex-col items-center lg:items-start text-center lg:text-left mt-6 lg:-mt-24 w-full min-w-0">
             <div className="flex flex-wrap gap-2 md:gap-4 mb-4 md:mb-8 justify-center lg:justify-start min-w-0 w-full">
               <div className="badge-alpha flex items-center gap-1.5 md:gap-2 px-3 py-2 md:px-5 md:py-3 rounded-lg md:rounded-xl text-sm hover:scale-105 transition-transform duration-300">
                 <Star className="h-4 w-4 md:h-5 md:w-5" /> ALPHA

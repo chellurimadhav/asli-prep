@@ -66,8 +66,8 @@ export default function About() {
               </Button>
             </div>
             {about.imageUrl && (
-              <div className="flex justify-center">
-                <div className="relative w-full max-w-md">
+              <div className="flex justify-center lg:justify-end">
+                <div className="relative w-full max-w-lg md:max-w-xl lg:max-w-2xl xl:max-w-3xl">
                   <div className="absolute -inset-2 bg-primary/20 rounded-3xl blur-xl" />
                   <img
                     src={about.imageUrl}

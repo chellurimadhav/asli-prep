@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -10,6 +11,15 @@ import {
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
+
+  const isActive = (href: string) => {
+    if (href.startsWith('/#')) {
+      const hash = href.replace('/#', '');
+      return location.pathname === '/' && (location.hash || '').replace('#', '') === hash;
+    }
+    return location.pathname === href;
+  };
 
   // Close mobile menu on scroll
   useEffect(() => {
@@ -35,6 +45,7 @@ const Navbar = () => {
   ];
 
   const linkClass = "nav-link-hover text-foreground/80 hover:text-primary font-medium text-sm transition-colors duration-300 py-2";
+  const activeClass = "text-primary font-semibold border-b-2 border-primary pb-0.5";
 
   // On mobile: close menu and ensure hash links scroll to section (works when already on home or after nav)
   const handleMobileNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -56,27 +67,36 @@ const Navbar = () => {
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isOpen ? 'bg-white shadow-md' : 'bg-white/98 backdrop-blur-lg'}`}>
       <div className="container mx-auto">
-        <div className="flex items-center justify-between h-14 md:h-16">
-          {/* Logo */}
+        <div className="flex items-center justify-between min-h-[4em] h-14 md:h-20 py-2">
+          {/* Logo - 4em height per request */}
           <a href="/" className="flex items-center shrink-0 transition-opacity duration-300 hover:opacity-90">
-            <img src="/images/asliprepfound.png" alt="ASLI Prep Foundation" className="h-10 md:h-12 w-auto" />
+            <img src="/images/asliprepfound.png" alt="ASLI Prep Foundation" className="h-[4em] w-auto object-contain" />
           </a>
 
           {/* Desktop Navigation - compact layout */}
           <div className="hidden lg:flex items-center gap-6">
             {mainLinks.map((link) => (
-              <a key={link.label} href={link.href} className={linkClass}>
+              <a
+                key={link.label}
+                href={link.href}
+                className={`${linkClass} ${isActive(link.href) ? activeClass : ''}`}
+              >
                 {link.label}
               </a>
             ))}
             <DropdownMenu>
-              <DropdownMenuTrigger className={`${linkClass} flex items-center gap-1 outline-none`}>
+              <DropdownMenuTrigger
+                className={`${linkClass} flex items-center gap-1 outline-none ${moreLinks.some((l) => isActive(l.href)) ? activeClass : ''}`}
+              >
                 More <ChevronDown className="h-4 w-4" />
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="min-w-[160px]">
                 {moreLinks.map((link) => (
                   <DropdownMenuItem key={link.label} asChild>
-                    <a href={link.href} className="cursor-pointer">
+                    <a
+                      href={link.href}
+                      className={`cursor-pointer ${isActive(link.href) ? 'text-primary font-semibold bg-primary/5' : ''}`}
+                    >
                       {link.label}
                     </a>
                   </DropdownMenuItem>
@@ -123,7 +143,7 @@ const Navbar = () => {
               <a
                 key={link.label}
                 href={link.href}
-                className={`block ${linkClass} px-2 py-2.5 rounded-lg hover:bg-muted/60`}
+                className={`block ${linkClass} px-2 py-2.5 rounded-lg hover:bg-muted/60 ${isActive(link.href) ? 'text-primary font-semibold bg-primary/10' : ''}`}
                 onClick={(e) => handleMobileNavClick(e, link.href)}
               >
                 {link.label}
@@ -133,7 +153,7 @@ const Navbar = () => {
               <a
                 key={link.label}
                 href={link.href}
-                className={`block ${linkClass} px-2 py-2.5 rounded-lg hover:bg-muted/60`}
+                className={`block ${linkClass} px-2 py-2.5 rounded-lg hover:bg-muted/60 ${isActive(link.href) ? 'text-primary font-semibold bg-primary/10' : ''}`}
                 onClick={(e) => handleMobileNavClick(e, link.href)}
               >
                 {link.label}

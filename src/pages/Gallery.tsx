@@ -2,6 +2,21 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { useContent } from '@/hooks/useContent';
 
+/** Convert YouTube watch / youtu.be URL to embed URL for iframe. */
+function youtubeToEmbedUrl(url: string): string {
+  if (!url || typeof url !== 'string') return '';
+  const u = url.trim();
+  // Already embed
+  if (u.includes('youtube.com/embed/')) return u;
+  // youtube.com/watch?v=ID or youtube.com/watch?other=1&v=ID
+  const watchMatch = u.match(/(?:youtube\.com\/watch\?.*[?&])?v=([a-zA-Z0-9_-]{11})/);
+  if (watchMatch) return `https://www.youtube.com/embed/${watchMatch[1]}`;
+  // youtu.be/ID
+  const shortMatch = u.match(/(?:youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+  if (shortMatch) return `https://www.youtube.com/embed/${shortMatch[1]}`;
+  return u;
+}
+
 type GalleryItem = {
   id: string;
   title: string;
@@ -40,9 +55,9 @@ export default function Gallery() {
   const { data: promoData } = useContent<PromoVideosContent>('promoVideos', defaultPromoVideos);
 
   const items = data.items || [];
-  const videos = (promoData.videos || [])
-    .filter((v) => v.active !== false)
-    .sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0));
+  const videos = (promoData?.videos || [])
+    .filter((v) => v && v.active !== false)
+    .sort((a, b) => (a.displayOrder ?? 0) - (b.displayOrder ?? 0));
 
   return (
     <div className="min-h-screen bg-background">
@@ -135,13 +150,19 @@ export default function Gallery() {
                   className="bg-white rounded-2xl shadow-lg border border-border overflow-hidden hover:shadow-xl transition-all hover:-translate-y-1 flex flex-col"
                 >
                   <div className="aspect-video bg-black">
-                    <iframe
-                      className="w-full h-full"
-                      src={video.youtubeUrl}
-                      title={video.title}
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      allowFullScreen
-                    />
+                    {video.youtubeUrl ? (
+                      <iframe
+                        className="w-full h-full"
+                        src={youtubeToEmbedUrl(video.youtubeUrl)}
+                        title={video.title || 'YouTube video'}
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowFullScreen
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-white/70 text-sm">
+                        Add YouTube link in admin
+                      </div>
+                    )}
                   </div>
                   <div className="p-4 space-y-2">
                     <h3 className="text-lg font-semibold text-secondary">{video.title}</h3>
