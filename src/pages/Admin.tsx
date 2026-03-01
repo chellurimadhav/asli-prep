@@ -4,6 +4,13 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
   LayoutDashboard,
   FileText,
   Image,
@@ -112,7 +119,7 @@ type PromoVideo = {
   active: boolean;
 };
 
-type ResourcesItem = { title: string; desc: string; action: string };
+type ResourcesItem = { title: string; desc: string; action: string; url?: string };
 type ResourcesPageContent = {
   sectionBadge: string;
   sectionTitle: string;
@@ -381,10 +388,10 @@ export default function Admin() {
     downloadablesTitle: "Request",
     downloadablesTitleHighlight: "Resources",
     items: [
-      { title: "Free Sample Study Materials", desc: "Comprehensive, exam-aligned content", action: "Download" },
-      { title: "Downloadable Guides", desc: "Blog articles on exam preparation, parenting tips for competitive exam prep", action: "View" },
-      { title: "Video Library", desc: "Sample lectures. Latest exam updates and news", action: "Watch" },
-      { title: "Success Stories & Case Studies", desc: "Testimonials from students, teachers, and administrators", action: "Read" },
+      { title: "Free Sample Study Materials", desc: "Comprehensive, exam-aligned content", action: "View", url: "" },
+      { title: "Downloadable Guides", desc: "Blog articles on exam preparation, parenting tips for competitive exam prep", action: "View", url: "" },
+      { title: "Video Library", desc: "Sample lectures. Latest exam updates and news", action: "View", url: "" },
+      { title: "Success Stories & Case Studies", desc: "Testimonials from students, teachers, and administrators", action: "View", url: "" },
     ],
     newsletterTitle: "Stay Updated",
     newsletterDescription: "Newsletter signup for updates. Latest exam updates and news, parenting tips for competitive exam prep.",
@@ -1816,7 +1823,7 @@ export default function Admin() {
 
               <SectionCard
                 title="Resource Cards (4 items)"
-                description="Title, description and action label for each card. Order matches the page."
+                description="Upload PDFs, images, or set a link for each card. Viewers see a View button that opens this resource."
                 onSave={() => saveContent("resources", resourcesPage)}
               >
                 {(resourcesPage.items || []).map((item, index) => (
@@ -1851,20 +1858,87 @@ export default function Admin() {
                         placeholder="Short description"
                       />
                     </Field>
-                    <Field label="Action Label">
-                      <Input
-                        value={item.action}
-                        onChange={(e) =>
+                    <Field label="Action label">
+                      <Select
+                        value={["Download", "View", "Watch", "Read"].includes(item.action) ? item.action : "View"}
+                        onValueChange={(value) =>
                           setResourcesPage((p) => ({
                             ...p,
                             items: (p.items || []).map((it, i) =>
-                              i === index ? { ...it, action: e.target.value } : it
+                              i === index ? { ...it, action: value } : it
                             ),
                           }))
                         }
-                        placeholder="e.g. Download / View / Watch"
-                      />
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="View" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Download">Download</SelectItem>
+                          <SelectItem value="View">View</SelectItem>
+                          <SelectItem value="Watch">Watch</SelectItem>
+                          <SelectItem value="Read">Read</SelectItem>
+                        </SelectContent>
+                      </Select>
                     </Field>
+                    <div className="border-t border-slate-200 pt-3">
+                      <Field label="Resource link or file (PDF / image / video URL)">
+                        <div className="space-y-2">
+                          {item.url && (
+                            <a
+                              href={item.url.startsWith("http") ? item.url : `${API_BASE}${item.url}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-2 text-sm text-teal-600 hover:underline"
+                            >
+                              <FileText className="h-4 w-4" />
+                              Current: {item.url.split("/").pop() || item.url}
+                            </a>
+                          )}
+                          <div className="flex flex-wrap items-center gap-2">
+                            <label className="cursor-pointer inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-dashed border-slate-300 bg-white hover:bg-slate-50 text-sm text-slate-600 transition-colors">
+                              <Upload className="h-4 w-4" />
+                              Upload PDF / Image
+                              <input
+                                type="file"
+                                accept="application/pdf,image/*"
+                                className="hidden"
+                                onChange={async (e) => {
+                                  const file = e.target.files?.[0];
+                                  if (!file || !token) return;
+                                  showToast("Uploading…", "info");
+                                  const url = await uploadFile(file, token);
+                                  if (url) {
+                                    setResourcesPage((p) => ({
+                                      ...p,
+                                      items: (p.items || []).map((it, i) =>
+                                        i === index ? { ...it, url: url.replace(API_BASE, "") } : it
+                                      ),
+                                    }));
+                                    showToast("File uploaded!", "success");
+                                  } else {
+                                    showToast("Upload failed", "error");
+                                  }
+                                  e.target.value = "";
+                                }}
+                              />
+                            </label>
+                          </div>
+                          <Input
+                            value={item.url || ""}
+                            onChange={(e) =>
+                              setResourcesPage((p) => ({
+                                ...p,
+                                items: (p.items || []).map((it, i) =>
+                                  i === index ? { ...it, url: e.target.value } : it
+                                ),
+                              }))
+                            }
+                            placeholder="Or paste URL (e.g. PDF, video, or image link)"
+                          />
+                        </div>
+                      </Field>
+                    </div>
                   </div>
                 ))}
               </SectionCard>

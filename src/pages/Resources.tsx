@@ -1,11 +1,13 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { FileText, Video, Download, BookOpen } from 'lucide-react';
+import { FileText, Video, BookOpen, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useContent } from '@/hooks/useContent';
 
-type ResourcesItem = { title: string; desc: string; action: string };
+const API_BASE = import.meta.env.VITE_API_BASE_URL || '';
+
+type ResourcesItem = { title: string; desc: string; action: string; url?: string };
 type ResourcesPageContent = {
   sectionBadge: string;
   sectionTitle: string;
@@ -29,14 +31,20 @@ const defaultResources: ResourcesPageContent = {
   downloadablesTitle: 'Request',
   downloadablesTitleHighlight: 'Resources',
   items: [
-    { title: 'Free Sample Study Materials', desc: 'Comprehensive, exam-aligned content', action: 'Download' },
-    { title: 'Downloadable Guides', desc: 'Blog articles on exam preparation, parenting tips for competitive exam prep', action: 'View' },
-    { title: 'Video Library', desc: 'Sample lectures. Latest exam updates and news', action: 'Watch' },
-    { title: 'Success Stories & Case Studies', desc: 'Testimonials from students, teachers, and administrators', action: 'Read' },
+    { title: 'Free Sample Study Materials', desc: 'Comprehensive, exam-aligned content', action: 'View', url: '' },
+    { title: 'Downloadable Guides', desc: 'Blog articles on exam preparation, parenting tips for competitive exam prep', action: 'View', url: '' },
+    { title: 'Video Library', desc: 'Sample lectures. Latest exam updates and news', action: 'View', url: '' },
+    { title: 'Success Stories & Case Studies', desc: 'Testimonials from students, teachers, and administrators', action: 'View', url: '' },
   ],
   newsletterTitle: 'Stay Updated',
   newsletterDescription: 'Newsletter signup for updates. Latest exam updates and news, parenting tips for competitive exam prep.',
 };
+
+function resourceHref(url: string | undefined): string | null {
+  if (!url?.trim()) return null;
+  if (url.startsWith('http://') || url.startsWith('https://')) return url;
+  return `${API_BASE}${url}`;
+}
 
 const CARD_ICONS = [FileText, BookOpen, Video, FileText] as const;
 
@@ -81,6 +89,8 @@ export default function Resources() {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {items.map((r, i) => {
               const Icon = CARD_ICONS[i % CARD_ICONS.length];
+              const href = resourceHref(r.url);
+              const actionLabel = r.action || 'View';
               return (
                 <div key={i} className="bg-white rounded-2xl p-8 shadow-lg border border-border hover:shadow-xl transition-all hover:-translate-y-2 group">
                   <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
@@ -88,10 +98,19 @@ export default function Resources() {
                   </div>
                   <h3 className="text-xl font-bold text-secondary mb-2">{r.title}</h3>
                   <p className="text-muted-foreground mb-6">{r.desc}</p>
-                  <Button className="w-full bg-primary hover:bg-primary/90">
-                    <Download className="mr-2 h-4 w-4" />
-                    {r.action}
-                  </Button>
+                  {href ? (
+                    <Button asChild className="w-full bg-primary hover:bg-primary/90">
+                      <a href={href} target="_blank" rel="noopener noreferrer">
+                        <ExternalLink className="mr-2 h-4 w-4" />
+                        {actionLabel}
+                      </a>
+                    </Button>
+                  ) : (
+                    <Button className="w-full bg-primary/70 cursor-default" disabled>
+                      <ExternalLink className="mr-2 h-4 w-4" />
+                      {actionLabel}
+                    </Button>
+                  )}
                 </div>
               );
             })}
