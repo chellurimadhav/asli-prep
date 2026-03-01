@@ -114,13 +114,13 @@ const Navbar = () => {
             </a>
           </div>
 
-          {/* Mobile Menu Button - always visible, never cut off */}
+          {/* Mobile Menu Button - larger tap target and icon */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="lg:hidden p-2 rounded-lg text-foreground hover:bg-muted/80 transition-colors shrink-0 flex-shrink-0"
+            className="lg:hidden p-3 rounded-lg text-foreground hover:bg-muted/80 transition-colors shrink-0 flex-shrink-0"
             aria-label="Toggle menu"
           >
-            {isOpen ? <X size={22} /> : <Menu size={22} />}
+            {isOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
         </div>
 
