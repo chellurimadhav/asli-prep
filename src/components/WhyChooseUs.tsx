@@ -51,13 +51,6 @@ const WhyChooseUs = () => {
       
       <div className="container mx-auto relative z-10">
         <AnimateIn animation="fade-up" duration={900} className="text-center mb-16">
-          <div className="inline-flex justify-center mb-4">
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/201/201623.png"
-              alt="Confident learning"
-              className="w-16 h-16 object-contain opacity-90"
-            />
-          </div>
           <span className="inline-block bg-accent text-accent-foreground font-bold px-4 py-2 rounded-full text-sm mb-4">
             WHY PARTNER WITH US
           </span>
