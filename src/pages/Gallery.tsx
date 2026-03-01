@@ -73,8 +73,7 @@ export default function Gallery() {
               Campus & <span className="text-gradient-teal">Program Moments</span>
             </h1>
             <p className="text-xl text-foreground/90 leading-relaxed">
-              Photos from classrooms, events, teacher training sessions, and student achievements. This
-              gallery is fully managed from the admin dashboard.
+              Photos from classrooms, events, teacher training sessions, and student achievements.
             </p>
           </div>
         </div>
@@ -84,7 +83,7 @@ export default function Gallery() {
         <div className="container mx-auto">
           {items.length === 0 ? (
             <p className="text-muted-foreground text-center">
-              No gallery items yet. Add images from the admin dashboard.
+              No gallery items yet.
             </p>
           ) : (
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -133,14 +132,13 @@ export default function Gallery() {
               Watch Our <span className="text-gradient-teal">Programs in Action</span>
             </h2>
             <p className="text-muted-foreground">
-              Short clips showcasing classrooms, events, teacher training, and success stories. Managed
-              fully from the admin dashboard by adding YouTube links.
+              Short clips showcasing classrooms, events, teacher training, and success stories.
             </p>
           </div>
 
           {videos.length === 0 ? (
             <p className="text-muted-foreground text-center">
-              No videos yet. Add promotional videos from the admin dashboard.
+              No videos yet.
             </p>
           ) : (
             <div className="grid gap-8 md:grid-cols-2">
@@ -160,7 +158,7 @@ export default function Gallery() {
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-white/70 text-sm">
-                        Add YouTube link in admin
+                        Video not available
                       </div>
                     )}
                   </div>

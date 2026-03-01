@@ -241,7 +241,8 @@ const Contact = () => {
 
               <Button type="submit" className="btn-lift w-full bg-primary hover:bg-primary/90 text-white font-bold py-6 text-lg transition-all duration-300">
                 <MessageCircle className="mr-2 h-5 w-5" />
-                Submit Inquiry (Opens WhatsApp)
+                <span className="sm:hidden">Submit Inquiry</span>
+                <span className="hidden sm:inline">Submit Inquiry (Opens WhatsApp)</span>
               </Button>
             </form>
           </div>

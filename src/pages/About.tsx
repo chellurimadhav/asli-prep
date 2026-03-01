@@ -48,10 +48,11 @@ export default function About() {
       <Navbar />
 
       {/* Hero – same colours as main page: light bg, dark blue + green text for readability */}
-      <section className="pt-24 pb-16 bg-gradient-to-b from-slate-50 via-white to-teal-50/30 px-4 sm:px-6">
-        <div className="container mx-auto max-w-full overflow-hidden">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="max-w-3xl min-w-0">
+      <section className="pt-24 pb-16 bg-gradient-to-b from-slate-50 via-white to-teal-50/30 px-4 sm:px-6 overflow-hidden">
+        <div className="container mx-auto max-w-full min-w-0 overflow-hidden">
+          {/* Mobile: heading → paragraph → image → button. Desktop: left = heading + paragraph + button, right = image */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start min-w-0">
+            <div className="max-w-3xl min-w-0 w-full order-1 lg:col-start-1 lg:row-start-1">
               <span className="inline-block bg-primary/10 text-primary font-bold px-4 py-2 rounded-full text-sm mb-6">
                 ABOUT US
               </span>
@@ -61,12 +62,9 @@ export default function About() {
               <p className="text-xl text-foreground/90 mb-8 leading-relaxed break-words">
                 {description}
               </p>
-              <Button asChild className="bg-primary hover:bg-primary/90 text-white font-bold px-6 sm:px-8 py-4 rounded-xl text-lg w-full sm:w-auto">
-                <a href="/#contact" className="block text-center">Schedule Institutional Partnership Meeting</a>
-              </Button>
             </div>
             {about.imageUrl && (
-              <div className="flex justify-center lg:justify-end">
+              <div className="flex justify-center lg:justify-end order-2 lg:col-start-2 lg:row-start-1 lg:row-span-2">
                 <div className="relative w-full max-w-lg md:max-w-xl lg:max-w-2xl xl:max-w-3xl">
                   <div className="absolute -inset-2 bg-primary/20 rounded-3xl blur-xl" />
                   <img
@@ -77,6 +75,11 @@ export default function About() {
                 </div>
               </div>
             )}
+            <div className="w-full min-w-0 max-w-full order-3 lg:col-start-1 lg:row-start-2">
+              <Button asChild className="bg-primary hover:bg-primary/90 text-white font-bold px-4 sm:px-8 py-4 rounded-xl text-base sm:text-lg w-full max-w-full min-w-0">
+                <a href="/#contact" className="block text-center w-full py-1 whitespace-normal leading-snug">Schedule Institutional Partnership Meeting</a>
+              </Button>
+            </div>
           </div>
         </div>
       </section>
