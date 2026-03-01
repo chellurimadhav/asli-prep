@@ -65,12 +65,12 @@ const Navbar = () => {
   };
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isOpen ? 'bg-white shadow-md' : 'bg-white/98 backdrop-blur-lg'}`}>
-      <div className="container mx-auto">
-        <div className="flex items-center justify-between min-h-[4em] h-14 md:h-20 py-2">
-          {/* Logo - 4em height per request */}
-          <a href="/" className="flex items-center shrink-0 transition-opacity duration-300 hover:opacity-90">
-            <img src="/images/asliprepfound.png" alt="ASLI Prep Foundation" className="h-[4em] w-auto object-contain" />
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 overflow-hidden ${isOpen ? 'bg-white shadow-md' : 'bg-white/98 backdrop-blur-lg'}`}>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-full">
+        <div className="flex items-center justify-between min-h-[4em] h-14 md:h-20 py-2 gap-3 min-w-0">
+          {/* Logo - 4em height; shrink on mobile so menu stays visible */}
+          <a href="/" className="flex items-center min-w-0 shrink transition-opacity duration-300 hover:opacity-90 max-w-[70%] sm:max-w-none">
+            <img src="/images/asliprepfound.png" alt="ASLI Prep Foundation" className="h-[4em] w-auto object-contain max-h-16 sm:max-h-none" />
           </a>
 
           {/* Desktop Navigation - compact layout */}
@@ -122,10 +122,10 @@ const Navbar = () => {
             </a>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Button - always visible, never cut off */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="lg:hidden p-2 -mr-2 rounded-lg text-foreground hover:bg-muted/80 transition-colors"
+            className="lg:hidden p-2 rounded-lg text-foreground hover:bg-muted/80 transition-colors shrink-0 flex-shrink-0"
             aria-label="Toggle menu"
           >
             {isOpen ? <X size={22} /> : <Menu size={22} />}

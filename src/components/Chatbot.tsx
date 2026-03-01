@@ -215,12 +215,12 @@ export default function Chatbot() {
         </div>
       )}
 
-      {/* Toggle button with visible label – inside viewport on mobile */}
+      {/* Toggle button – kept fully inside viewport; extra inset on mobile so it never clips */}
       <div
-        className="fixed z-50 flex items-center gap-2 max-w-[calc(100vw-2rem)]"
+        className="fixed z-50 flex items-center justify-end gap-2 max-w-[calc(100vw-2rem)] w-auto"
         style={{
-          bottom: 'max(1rem, env(safe-area-inset-bottom))',
-          right: 'max(1rem, env(safe-area-inset-right))',
+          right: 'max(1rem, calc(1rem + env(safe-area-inset-right, 0px)))',
+          bottom: 'max(1rem, calc(1rem + env(safe-area-inset-bottom, 0px)))',
         }}
       >
         <span

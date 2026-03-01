@@ -55,7 +55,7 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-12 md:py-20 bg-background px-4 sm:px-6 overflow-hidden">
+    <section id="contact" className="py-12 md:py-20 bg-background px-4 sm:px-6 lg:px-8 overflow-hidden">
       <div className="container mx-auto max-w-full min-w-0">
         <AnimateIn animation="fade-up" duration={900} className="text-center mb-16">
           <span className="inline-block bg-primary/10 text-primary font-bold px-4 py-2 rounded-full text-sm mb-4">
@@ -69,11 +69,11 @@ const Contact = () => {
           </p>
         </AnimateIn>
 
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
-          {/* Contact Info */}
-          <AnimateIn animation="slide-left" duration={900} className="space-y-8">
-          <div className="space-y-8">
-            <div className="card-teal rounded-2xl p-6 sm:p-8 text-white transition-all duration-300 hover:shadow-xl min-w-0 overflow-hidden">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 min-w-0">
+          {/* Contact Info – stay inside viewport on mobile */}
+          <AnimateIn animation="slide-left" duration={900} className="space-y-8 min-w-0 w-full max-w-full overflow-hidden">
+          <div className="space-y-8 min-w-0 w-full max-w-full overflow-hidden">
+            <div className="card-teal rounded-2xl p-6 sm:p-8 text-white transition-all duration-300 hover:shadow-xl min-w-0 w-full max-w-full overflow-hidden">
               <h3 className="text-2xl font-bold mb-6 text-white">Contact Information</h3>
               
               <div className="space-y-6">
@@ -122,33 +122,33 @@ const Contact = () => {
               </div>
             </div>
 
-            {/* WhatsApp CTA - teal-green aligned with brand */}
+            {/* WhatsApp CTA – full width, no overflow on mobile */}
             <a 
               href={whatsappLink}
               target="_blank" 
               rel="noopener noreferrer"
-              className="flex items-center gap-4 whatsapp-cta text-white rounded-2xl p-6 transition-all shadow-lg min-w-0"
+              className="flex items-center gap-4 whatsapp-cta text-white rounded-2xl p-6 transition-all shadow-lg min-w-0 w-full max-w-full overflow-hidden"
             >
               <div className="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
                 <MessageCircle className="h-8 w-8" />
               </div>
-              <div className="min-w-0 break-words">
+              <div className="min-w-0 flex-1 break-words overflow-hidden">
                 <p className="font-bold text-lg">Chat on WhatsApp</p>
                 <p className="opacity-95">Quick response guaranteed</p>
               </div>
             </a>
 
-            {/* LinkedIn – redirect link (same pattern as WhatsApp: clear icon + text) */}
+            {/* LinkedIn – full width, no overflow on mobile */}
             <a 
               href="https://www.linkedin.com/company/asliprep" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="linkedin-cta flex items-center gap-4 rounded-2xl p-6 shadow-lg min-w-0"
+              className="linkedin-cta flex items-center gap-4 rounded-2xl p-6 shadow-lg min-w-0 w-full max-w-full overflow-hidden"
             >
               <div className="linkedin-icon-wrap w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0 text-white">
                 <Linkedin className="h-8 w-8" strokeWidth={2} />
               </div>
-              <div className="min-w-0 break-words">
+              <div className="min-w-0 flex-1 break-words overflow-hidden">
                 <p className="font-bold text-lg text-white">Connect on LinkedIn</p>
                 <p className="text-white/95 text-sm">Follow us for updates</p>
               </div>
@@ -156,49 +156,49 @@ const Contact = () => {
           </div>
           </AnimateIn>
 
-          {/* Contact Form */}
-          <AnimateIn animation="slide-right" delay={150} duration={900}>
-          <div className="bg-white rounded-2xl shadow-xl border border-border p-4 sm:p-6 lg:p-8 transition-all duration-300 hover:shadow-2xl hover:border-primary/20 w-full max-w-full">
-            <h3 className="text-2xl font-bold text-secondary mb-6">Contact Us – Institutional Partnerships</h3>
+          {/* Contact Form – full width, no overflow on mobile */}
+          <AnimateIn animation="slide-right" delay={150} duration={900} className="min-w-0 w-full max-w-full overflow-hidden">
+          <div className="bg-white rounded-2xl shadow-xl border border-border p-4 sm:p-6 lg:p-8 transition-all duration-300 hover:shadow-2xl hover:border-primary/20 w-full max-w-full min-w-0 overflow-hidden box-border">
+            <h3 className="text-2xl font-bold text-secondary mb-6 break-words">Contact Us – Institutional Partnerships</h3>
             
-            <form className="space-y-6" onSubmit={handleSubmitInquiry}>
-              <div className="grid lg:grid-cols-2 gap-4">
-                <div>
+            <form className="space-y-6 min-w-0" onSubmit={handleSubmitInquiry}>
+              <div className="grid lg:grid-cols-2 gap-4 min-w-0">
+                <div className="min-w-0">
                   <label className="block text-sm font-medium text-foreground mb-2">Institution Name *</label>
-                  <Input placeholder="Your School/Institution Name" className="bg-muted border-border" value={institution} onChange={(e) => setInstitution(e.target.value)} />
+                  <Input placeholder="Your School/Institution Name" className="bg-muted border-border w-full max-w-full min-w-0" value={institution} onChange={(e) => setInstitution(e.target.value)} />
                 </div>
-                <div>
+                <div className="min-w-0">
                   <label className="block text-sm font-medium text-foreground mb-2">Contact Person *</label>
-                  <Input placeholder="Your Full Name" className="bg-muted border-border" value={contactPerson} onChange={(e) => setContactPerson(e.target.value)} />
+                  <Input placeholder="Your Full Name" className="bg-muted border-border w-full max-w-full min-w-0" value={contactPerson} onChange={(e) => setContactPerson(e.target.value)} />
                 </div>
               </div>
 
-              <div className="grid lg:grid-cols-2 gap-4">
-                <div>
+              <div className="grid lg:grid-cols-2 gap-4 min-w-0">
+                <div className="min-w-0">
                   <label className="block text-sm font-medium text-foreground mb-2">Designation</label>
-                  <Input placeholder="Principal / Administrator" className="bg-muted border-border" value={designation} onChange={(e) => setDesignation(e.target.value)} />
+                  <Input placeholder="Principal / Administrator" className="bg-muted border-border w-full max-w-full min-w-0" value={designation} onChange={(e) => setDesignation(e.target.value)} />
                 </div>
-                <div>
+                <div className="min-w-0">
                   <label className="block text-sm font-medium text-foreground mb-2">City/State *</label>
-                  <Input placeholder="Your City, State" className="bg-muted border-border" value={cityState} onChange={(e) => setCityState(e.target.value)} />
+                  <Input placeholder="Your City, State" className="bg-muted border-border w-full max-w-full min-w-0" value={cityState} onChange={(e) => setCityState(e.target.value)} />
                 </div>
               </div>
 
-              <div className="grid lg:grid-cols-2 gap-4">
-                <div>
+              <div className="grid lg:grid-cols-2 gap-4 min-w-0">
+                <div className="min-w-0">
                   <label className="block text-sm font-medium text-foreground mb-2">Email *</label>
-                  <Input type="email" placeholder="email@institution.com" className="bg-muted border-border" value={email} onChange={(e) => setEmail(e.target.value)} />
+                  <Input type="email" placeholder="email@institution.com" className="bg-muted border-border w-full max-w-full min-w-0" value={email} onChange={(e) => setEmail(e.target.value)} />
                 </div>
-                <div>
+                <div className="min-w-0">
                   <label className="block text-sm font-medium text-foreground mb-2">Phone *</label>
-                  <Input type="tel" placeholder="+91 9876543210" className="bg-muted border-border" value={phone} onChange={(e) => setPhone(e.target.value)} />
+                  <Input type="tel" placeholder="+91 9876543210" className="bg-muted border-border w-full max-w-full min-w-0" value={phone} onChange={(e) => setPhone(e.target.value)} />
                 </div>
               </div>
 
-              <div>
+              <div className="min-w-0">
                 <label className="block text-sm font-medium text-foreground mb-2">Number of Students</label>
                 <Select value={studentCount} onValueChange={setStudentCount}>
-                  <SelectTrigger className="bg-muted border-border">
+                  <SelectTrigger className="bg-muted border-border w-full max-w-full min-w-0">
                     <SelectValue placeholder="Select student count" />
                   </SelectTrigger>
                   <SelectContent>
@@ -211,9 +211,9 @@ const Contact = () => {
                 </Select>
               </div>
 
-              <div>
+              <div className="min-w-0">
                 <label className="block text-sm font-medium text-foreground mb-2">Program Interest</label>
-                <div className="flex flex-wrap gap-3">
+                <div className="flex flex-wrap gap-3 min-w-0">
                   {['Alpha', 'Beta', 'Gamma', 'All Programs'].map((program) => (
                     <label key={program} className="flex items-center gap-2 bg-muted px-4 py-2 rounded-lg cursor-pointer hover:bg-primary/10 transition-colors">
                       <input
@@ -228,12 +228,12 @@ const Contact = () => {
                 </div>
               </div>
 
-              <div>
+              <div className="min-w-0">
                 <label className="block text-sm font-medium text-foreground mb-2">Message</label>
                 <Textarea 
                   placeholder="Tell us about your institution and requirements..." 
                   rows={4}
-                  className="bg-muted border-border"
+                  className="bg-muted border-border w-full max-w-full min-w-0 box-border"
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                 />
