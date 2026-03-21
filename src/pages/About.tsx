@@ -1,5 +1,7 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { SeoHead } from '@/components/SeoHead';
+import { seoAbout } from '@/lib/seo';
 import { Target, Eye, Heart, Award, Users, BookOpen, GraduationCap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useContent } from '@/hooks/useContent';
@@ -45,6 +47,7 @@ export default function About() {
 
   return (
     <div className="min-h-screen bg-background">
+      <SeoHead {...seoAbout} />
       <Navbar />
 
       {/* Hero – same colours as main page: light bg, dark blue + green text for readability */}

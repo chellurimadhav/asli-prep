@@ -1,6 +1,8 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { useContent } from '@/hooks/useContent';
+import { SeoHead } from '@/components/SeoHead';
+import { seoGallery } from '@/lib/seo';
 
 /** Convert YouTube watch / youtu.be URL to embed URL for iframe. */
 function youtubeToEmbedUrl(url: string): string {
@@ -61,6 +63,7 @@ export default function Gallery() {
 
   return (
     <div className="min-h-screen bg-background">
+      <SeoHead {...seoGallery} />
       <Navbar />
 
       <section className="pt-24 pb-10 bg-gradient-to-b from-slate-50 via-white to-teal-50/30">

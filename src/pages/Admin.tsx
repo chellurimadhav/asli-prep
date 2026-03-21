@@ -1,4 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
+import { SeoHead } from "@/components/SeoHead";
+import { seoAdmin } from "@/lib/seo";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -553,6 +555,7 @@ export default function Admin() {
   if (!token) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+        <SeoHead {...seoAdmin} noindex />
         <div className="w-full max-w-md mx-4">
           <div className="text-center mb-8">
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-teal-500 to-emerald-600 shadow-lg shadow-teal-500/30 mb-4">
@@ -612,6 +615,7 @@ export default function Admin() {
 
   return (
     <div className="min-h-screen bg-slate-50 flex">
+      <SeoHead {...seoAdmin} noindex />
       {/* ── Sidebar ── */}
       <aside
         className={`fixed inset-y-0 left-0 z-40 bg-slate-900 border-r border-slate-800 transition-all duration-300 flex flex-col ${sidebarOpen ? "w-64" : "w-[72px]"

@@ -4,6 +4,8 @@ import { FileText, Video, BookOpen, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useContent } from '@/hooks/useContent';
+import { SeoHead } from '@/components/SeoHead';
+import { seoResources } from '@/lib/seo';
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL || '';
 
@@ -54,6 +56,7 @@ export default function Resources() {
 
   return (
     <div className="min-h-screen bg-background">
+      <SeoHead {...seoResources} />
       <Navbar />
 
       {/* Hero */}

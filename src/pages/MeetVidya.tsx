@@ -1,5 +1,7 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { SeoHead } from '@/components/SeoHead';
+import { seoMeetVidya } from '@/lib/seo';
 import { MessageCircle, Brain, Zap, BookOpen } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useContent } from '@/hooks/useContent';
@@ -44,6 +46,7 @@ export default function MeetVidya() {
 
   return (
     <div className="min-h-screen bg-background">
+      <SeoHead {...seoMeetVidya} />
       <Navbar />
 
       {/* Hero */}

@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { SeoHead } from '@/components/SeoHead';
+import { seoHome } from '@/lib/seo';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import Programs from '@/components/Programs';
@@ -26,6 +28,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen w-full min-w-0 bg-background">
+      <SeoHead {...seoHome} />
       <Navbar />
       <Hero />
       <Programs />

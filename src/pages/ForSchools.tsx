@@ -1,5 +1,7 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { SeoHead } from '@/components/SeoHead';
+import { seoForSchools } from '@/lib/seo';
 import { CheckCircle, Building2, Palette, BarChart3, Users, FileCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useBusinessInfo } from '@/hooks/useBusinessInfo';
@@ -27,6 +29,7 @@ export default function ForSchools() {
 
   return (
     <div className="min-h-screen bg-background">
+      <SeoHead {...seoForSchools} />
       <Navbar />
       
       {/* Hero – same colours as main page: light bg, dark blue + green text for readability */}
