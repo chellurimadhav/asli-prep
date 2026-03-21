@@ -1,7 +1,7 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { SeoHead } from '@/components/SeoHead';
-import { seoHome } from '@/lib/seo';
+import { seoContact, seoHome } from '@/lib/seo';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import Programs from '@/components/Programs';
@@ -12,8 +12,30 @@ import Newsletter from '@/components/Newsletter';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 
+/** URL hash for / and /#contact — syncs React Router + plain `<a href="/#contact">` clicks */
+function useUrlHash() {
+  const location = useLocation();
+  const [hash, setHash] = useState(() =>
+    typeof window !== 'undefined' ? window.location.hash : ''
+  );
+
+  useEffect(() => {
+    setHash(window.location.hash);
+  }, [location.pathname, location.search, location.hash, location.key]);
+
+  useEffect(() => {
+    const onHashChange = () => setHash(window.location.hash);
+    window.addEventListener('hashchange', onHashChange);
+    return () => window.removeEventListener('hashchange', onHashChange);
+  }, []);
+
+  return hash;
+}
+
 const Index = () => {
-  const { hash } = useLocation();
+  const hash = useUrlHash();
+  const isContactSection = hash === '#contact';
+  const seo = isContactSection ? seoContact : seoHome;
 
   // Scroll to section when hash is present (fixes Contact/Testimonials etc. on phone and when navigating from other pages)
   useEffect(() => {
@@ -28,7 +50,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen w-full min-w-0 bg-background">
-      <SeoHead {...seoHome} />
+      <SeoHead {...seo} key={isContactSection ? 'contact' : 'home'} />
       <Navbar />
       <Hero />
       <Programs />

@@ -44,6 +44,25 @@ export const seoHome: PageSeoConfig = {
   canonical: metadataHome.alternates.canonical,
 };
 
+/** Contact section on home — https://www.asliprep.com/#contact */
+export const metadataContact = {
+  title: "Contact Asli Prep Foundation | Hyderabad EdTech",
+  description:
+    "Contact Asli Prep Foundation, Hyderabad. Partner your school for JEE, NEET & Olympiad preparation. Call or email our team today.",
+  keywords: ["Contact Asli Prep Foundation", "EdTech Hyderabad contact"],
+  alternates: {
+    canonical: "https://www.asliprep.com/#contact",
+  },
+} as const;
+
+/** Flattened for `<SeoHead />` when URL hash is `#contact` (Index page) */
+export const seoContact: PageSeoConfig = {
+  title: metadataContact.title,
+  description: metadataContact.description,
+  keywords: [...metadataContact.keywords],
+  canonical: metadataContact.alternates.canonical,
+};
+
 /** Flattened for `<SeoHead />` on `/about` */
 export const seoAbout: PageSeoConfig = {
   title: metadataAbout.title,
@@ -91,25 +110,49 @@ export const seoMeetVidya: PageSeoConfig = {
 };
 
 /** Resources — https://www.asliprep.com/resources */
-export const seoResources: PageSeoConfig = {
-  title: "Free Resources | Study Materials & Guides | Asli Prep",
+export const metadataResources = {
+  title: "JEE NEET Olympiad Resources | Asli Prep Foundation",
   description:
-    "Free sample materials, guides, and updates for JEE, NEET & Olympiad prep. Request resources and stay updated with Asli Prep Foundation.",
+    "Access JEE, NEET & Olympiad study resources including practice papers, concept videos, and structured learning materials for students.",
   keywords: [
-    "JEE NEET free resources",
-    "Olympiad study materials India",
-    "Asli Prep downloads",
+    "JEE NEET study resources India",
+    "Olympiad preparation material",
   ],
-  canonical: `${SITE_ORIGIN}/resources`,
+  alternates: {
+    canonical: "https://www.asliprep.com/resources",
+  },
+} as const;
+
+/** Flattened for `<SeoHead />` on `/resources` */
+export const seoResources: PageSeoConfig = {
+  title: metadataResources.title,
+  description: metadataResources.description,
+  keywords: [...metadataResources.keywords],
+  canonical: metadataResources.alternates.canonical,
 };
 
 /** Gallery — https://www.asliprep.com/gallery */
-export const seoGallery: PageSeoConfig = {
-  title: "Gallery & Videos | Asli Prep Foundation",
+export const metadataGallery = {
+  title: "Asli Prep Gallery | School Programs, Events & Learning",
   description:
-    "Watch promo videos and highlights from Asli Prep Foundation — JEE, NEET & Olympiad programs for schools across India.",
-  keywords: ["Asli Prep videos", "school coaching gallery", "JEE NEET promo"],
-  canonical: `${SITE_ORIGIN}/gallery`,
+    "Explore Asli Prep Foundation gallery showcasing school programs, classroom sessions, student engagement, and JEE, NEET & Olympiad learning activities.",
+  keywords: [
+    "Asli Prep gallery",
+    "school programs JEE NEET",
+    "classroom learning India",
+    "student activities Asli Prep",
+  ],
+  alternates: {
+    canonical: "https://www.asliprep.com/gallery",
+  },
+} as const;
+
+/** Flattened for `<SeoHead />` on `/gallery` */
+export const seoGallery: PageSeoConfig = {
+  title: metadataGallery.title,
+  description: metadataGallery.description,
+  keywords: [...metadataGallery.keywords],
+  canonical: metadataGallery.alternates.canonical,
 };
 
 /** 404 — combine with `canonical={SITE_ORIGIN + pathname}` in NotFound */

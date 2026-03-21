@@ -56,7 +56,7 @@ export default function Resources() {
 
   return (
     <div className="min-h-screen bg-background">
-      <SeoHead {...seoResources} />
+      <SeoHead {...seoResources} key="page-resources" />
       <Navbar />
 
       {/* Hero */}
