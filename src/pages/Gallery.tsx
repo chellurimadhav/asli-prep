@@ -10,12 +10,41 @@ function youtubeToEmbedUrl(url: string): string {
   const u = url.trim();
   // Already embed
   if (u.includes('youtube.com/embed/')) return u;
-  // youtube.com/watch?v=ID or youtube.com/watch?other=1&v=ID
-  const watchMatch = u.match(/(?:youtube\.com\/watch\?.*[?&])?v=([a-zA-Z0-9_-]{11})/);
+
+  // Handle common YouTube URL formats reliably:
+  // - youtube.com/watch?v=ID
+  // - youtu.be/ID
+  // - youtube.com/shorts/ID
+  try {
+    const parsed = new URL(u);
+    const host = parsed.hostname.replace(/^www\./, '');
+
+    if (host === 'youtu.be') {
+      const id = parsed.pathname.split('/').filter(Boolean)[0];
+      if (id) return `https://www.youtube.com/embed/${id}`;
+    }
+
+    if (host === 'youtube.com' || host === 'm.youtube.com') {
+      if (parsed.pathname === '/watch') {
+        const id = parsed.searchParams.get('v');
+        if (id) return `https://www.youtube.com/embed/${id}`;
+      }
+
+      const shortsMatch = parsed.pathname.match(/^\/shorts\/([a-zA-Z0-9_-]{11})/);
+      if (shortsMatch) return `https://www.youtube.com/embed/${shortsMatch[1]}`;
+    }
+  } catch {
+    // Fall back to regex parsing for non-standard URL strings.
+  }
+
+  // Fallback regexes if URL parsing fails
+  const watchMatch = u.match(/[?&]v=([a-zA-Z0-9_-]{11})/);
   if (watchMatch) return `https://www.youtube.com/embed/${watchMatch[1]}`;
-  // youtu.be/ID
-  const shortMatch = u.match(/(?:youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+  const shortMatch = u.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/);
   if (shortMatch) return `https://www.youtube.com/embed/${shortMatch[1]}`;
+  const shortsMatch = u.match(/youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/);
+  if (shortsMatch) return `https://www.youtube.com/embed/${shortsMatch[1]}`;
+
   return u;
 }
 
@@ -144,7 +173,7 @@ export default function Gallery() {
               No videos yet.
             </p>
           ) : (
-            <div className="grid gap-8 md:grid-cols-2">
+            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
               {videos.map((video) => (
                 <article
                   key={video.id}
